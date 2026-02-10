@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASCII Art Widget Control Panel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #12121a;
+      --bg-tertiary: #1a1a2e;
+      --accent-cyan: #00f5ff;
+      --accent-magenta: #ff00ff;
+      --accent-green: #00ff41;
+      --accent-red: #ff3864;
+      --accent-yellow: #ffe66d;
+      --text-primary: #e4e4e7;
+      --text-secondary: #a1a1aa;
+      --border: #27272a;
+      --glow-cyan: 0 0 20px rgba(0, 245, 255, 0.3);
+      --glow-magenta: 0 0 20px rgba(255, 0, 255, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Animated background grid */
+    .bg-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(0, 245, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 245, 255, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-grid::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at 50% 0%, rgba(0, 245, 255, 0.1) 0%, transparent 50%);
+      animation: pulse-bg 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse-bg {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    /* Scanlines */
+    .scanlines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.3;
+    }
+
+    /* Container */
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding: 2rem 0;
+    }
+
+    .glitch-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 3rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      position: relative;
+      display: inline-block;
+    }
+
+    .glitch-title::before,
+    .glitch-title::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .glitch-title::before {
+      animation: glitch-1 2s infinite linear alternate-reverse;
+      color: var(--accent-cyan);
+      z-index: -1;
+    }
+
+    .glitch-title::after {
+      animation: glitch-2 3s infinite linear alternate-reverse;
+      color: var(--accent-magenta);
+      z-index: -2;
+    }
+
+    @keyframes glitch-1 {
+      0%, 90%, 100% { transform: translate(0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(-2px, -2px); }
+      60% { transform: translate(2px, 2px); }
+      80% { transform: translate(2px, -2px); }
+    }
+
+    @keyframes glitch-2 {
+      0%, 90%, 100% { transform: translate(0); }
+      20% { transform: translate(2px, -2px); }
+      40% { transform: translate(2px, 2px); }
+      60% { transform: translate(-2px, -2px); }
+      80% { transform: translate(-2px, 2px); }
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    /* Status Bar */
+    .status-bar {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .status-dot.online {
+      background: var(--accent-green);
+      box-shadow: 0 0 10px var(--accent-green);
+    }
+
+    .status-dot.syncing {
+      background: var(--accent-yellow);
+      box-shadow: 0 0 10px var(--accent-yellow);
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Main Grid */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 300px 1fr 300px;
+      gap: 2rem;
+    }
+
+    @media (max-width: 1200px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-magenta));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+      color: var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Theme Selector */
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .theme-btn {
+      padding: 1rem;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+
+    .theme-btn:hover {
+      border-color: var(--accent-cyan);
+      box-shadow: var(--glow-cyan);
+      transform: translateY(-2px);
+    }
+
+    .theme-btn.active {
+      border-color: var(--accent-magenta);
+      box-shadow: var(--glow-magenta);
+      background: rgba(255, 0, 255, 0.1);
+    }
+
+    .theme-icon {
+      font-size: 1.5rem;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    /* Preview Area */
+    .preview-container {
+      min-height: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ascii-preview {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      line-height: 1.2;
+      white-space: pre;
+      color: var(--accent-green);
+      text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+      background: rgba(0, 0, 0, 0.5);
+      padding: 2rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      max-width: 100%;
+      overflow-x: auto;
+    }
+
+    .preview-meta {
+      margin-top: 1rem;
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
+
+    /* Control Buttons */
+    .control-group {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 0.75rem 1.25rem;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-primary);
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn:hover {
+      border-color: var(--accent-cyan);
+      background: rgba(0, 245, 255, 0.1);
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-magenta));
+      border: none;
+      color: var(--bg-primary);
+      font-weight: 600;
+    }
+
+    .btn.primary:hover {
+      box-shadow: var(--glow-cyan);
+      transform: translateY(-1px);
+    }
+
+    .btn.danger {
+      border-color: var(--accent-red);
+      color: var(--accent-red);
+    }
+
+    .btn.danger:hover {
+      background: rgba(255, 56, 100, 0.1);
+    }
+
+    /* Playlist */
+    .playlist-container {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .playlist-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+      cursor: move;
+      transition: all 0.2s;
+    }
+
+    .playlist-item:hover {
+      border-color: var(--accent-cyan);
+    }
+
+    .playlist-item.playing {
+      border-color: var(--accent-green);
+      background: rgba(0, 255, 65, 0.1);
+    }
+
+    .playlist-number {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      min-width: 24px;
+    }
+
+    .playlist-info {
+      flex: 1;
+    }
+
+    .playlist-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .playlist-theme {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .playlist-actions {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .icon-btn {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .icon-btn:hover {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    /* Custom Message */
+    .input-group {
+      margin-bottom: 1rem;
+    }
+
+    .input-label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-primary);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 0 3px rgba(0, 245, 255, 0.1);
+    }
+
+    textarea.input-field {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    /* Art Gallery Grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      max-height: 500px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+
+    .gallery-item {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .gallery-item:hover {
+      border-color: var(--accent-cyan);
+      transform: translateY(-2px);
+    }
+
+    .gallery-item.selected {
+      border-color: var(--accent-magenta);
+      box-shadow: var(--glow-magenta);
+    }
+
+    .gallery-preview {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.5rem;
+      line-height: 1.1;
+      white-space: pre;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+      height: 80px;
+      overflow: hidden;
+      opacity: 0.7;
+    }
+
+    .gallery-item:hover .gallery-preview {
+      color: var(--accent-cyan);
+      opacity: 1;
+    }
+
+    .gallery-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+    }
+
+    .gallery-title {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .gallery-theme {
+      padding: 0.15rem 0.5rem;
+      background: var(--bg-secondary);
+      border-radius: 4px;
+      color: var(--text-secondary);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-secondary);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-cyan);
+    }
+
+    /* Notifications */
+    .notification {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      padding: 1rem 1.5rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transform: translateX(150%);
+      transition: transform 0.3s ease;
+      z-index: 2000;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+
+    .notification.success {
+      border-color: var(--accent-green);
+    }
+
+    .notification.error {
+      border-color: var(--accent-red);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 3rem 0;
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Terminal Effect */
+    .terminal-line {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent-green);
+      opacity: 0.7;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 16px;
+      background: var(--accent-green);
+      animation: blink 1s infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="scanlines"></div>
+
+  <div class="container">
+    <header>
+      <h1 class="glitch-title" data-text="ASCII ART WIDGET">ASCII ART WIDGET</h1>
+      <p class="subtitle">Control Panel v2.0 // Remote Access Terminal</p>
+    </header>
+
+    <div class="status-bar">
+      <div class="status-item">
+        <span class="status-dot online"></span>
+        <span id="connection-status">ONLINE</span>
+      </div>
+      <div class="status-item">
+        <span>📊</span>
+        <span id="art-count">0 pieces</span>
+      </div>
+      <div class="status-item">
+        <span>🎨</span>
+        <span id="current-theme">All Themes</span>
+      </div>
+      <div class="status-item">
+        <span>⏱️</span>
+        <span id="last-sync">Just now</span>
+      </div>
+    </div>
+
+    <div class="main-grid">
+      <!-- Left Panel: Themes & Quick Actions -->
+      <div class="left-panel">
+        <div class="card">
+          <h3 class="card-title">🎭 Themes</h3>
+          <div class="theme-grid">
+            <button class="theme-btn active" data-theme="all">
+              <span class="theme-icon">🎲</span>
+              <span>All</span>
+            </button>
+            <button class="theme-btn" data-theme="cyberpunk">
+              <span class="theme-icon">🌃</span>
+              <span>Cyber</span>
+            </button>
+            <button class="theme-btn" data-theme="matrix">
+              <span class="theme-icon">💊</span>
+              <span>Matrix</span>
+            </button>
+            <button class="theme-btn" data-theme="retro">
+              <span class="theme-icon">💾</span>
+              <span>Retro</span>
+            </button>
+            <button class="theme-btn" data-theme="nature">
+              <span class="theme-icon">🌿</span>
+              <span>Nature</span>
+            </button>
+            <button class="theme-btn" data-theme="glitch">
+              <span class="theme-icon">⚡</span>
+              <span>Glitch</span>
+            </button>
+            <button class="theme-btn" data-theme="abstract">
+              <span class="theme-icon">🔮</span>
+              <span>Abstract</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top: 1.5rem;">
+          <h3 class="card-title">⚡ Quick Actions</h3>
+          <div class="control-group">
+            <button class="btn primary" id="btn-next">
+              <span>▶</span> Next
+            </button>
+            <button class="btn" id="btn-random">
+              <span>🎲</span> Random
+            </button>
+          </div>
+          <div class="control-group">
+            <button class="btn" id="btn-refresh">
+              <span>🔄</span> Sync
+            </button>
+            <button class="btn danger" id="btn-clear">
+              <span>🗑️</span> Clear
+            </button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top: 1.5rem;">
+          <h3 class="card-title">💬 Custom Message</h3>
+          <div class="input-group">
+            <label class="input-label">Message Text</label>
+            <textarea class="input-field" id="custom-message" placeholder="Enter your message..."></textarea>
+          </div>
+          <button class="btn primary" id="btn-send-msg" style="width: 100%;">
+            <span>📡</span> Send to Widget
+          </button>
+        </div>
+      </div>
+
+      <!-- Center Panel: Preview -->
+      <div class="center-panel">
+        <div class="card preview-container">
+          <h3 class="card-title">👁️ Live Preview</h3>
+          <div class="ascii-preview" id="preview-content">
+Loading...
+          </div>
+          <div class="preview-meta" id="preview-meta">
+            Waiting for connection...
+          </div>
+          <div class="control-group" style="margin-top: 1.5rem; justify-content: center;">
+            <button class="btn" id="btn-add-queue">
+              <span>➕</span> Add to Queue
+            </button>
+            <button class="btn primary" id="btn-set-now">
+              <span>📺</span> Set Now
+            </button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top: 1.5rem;">
+          <h3 class="card-title">🖼️ Art Gallery</h3>
+          <div class="gallery-grid" id="gallery">
+            <!-- Gallery items populated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Panel: Playlist -->
+      <div class="right-panel">
+        <div class="card">
+          <h3 class="card-title">📋 Current Queue</h3>
+          <div class="playlist-container" id="playlist">
+            <div class="playlist-item">
+              <span class="playlist-number">01</span>
+              <div class="playlist-info">
+                <div class="playlist-title">Queue is empty</div>
+                <div class="playlist-theme">Add items from gallery</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top: 1.5rem;">
+          <h3 class="card-title">📊 System Log</h3>
+          <div id="system-log" style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-secondary); max-height: 200px; overflow-y: auto;">
+            <div class="terminal-line">> System initialized...</div>
+            <div class="terminal-line">> Connecting to widget...</div>
+            <div class="terminal-line">> <span class="cursor"></span></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top: 1.5rem;">
+          <h3 class="card-title">ℹ️ About</h3>
+          <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6;">
+            This control panel manages your iOS Scriptable widget. 
+            Changes sync automatically every 15-30 minutes due to iOS limitations.
+          </p>
+          <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+            <div class="terminal-line">Widget v2.0.0</div>
+            <div class="terminal-line">Protocol: HTTPS</div>
+            <div class="terminal-line">Endpoint: GitHub Raw</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Built with 💜 by OpenClaw | <a href="https://github.com/coldshalamov/openclaw-widget" target="_blank">View on GitHub</a></p>
+    </footer>
+  </div>
+
+  <div class="notification" id="notification">
+    <span id="notification-icon">✓</span>
+    <span id="notification-text">Operation completed</span>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════════
+    // ASCII Art Widget Control Panel - JavaScript
+    // ═══════════════════════════════════════════════════════════════
+
+    const CONFIG = {
+      CONTENT_URL: 'https://raw.githubusercontent.com/coldshalamov/openclaw-widget/main/content/art-v2.json',
+      POLL_INTERVAL: 30000, // 30 seconds
+      STORAGE_KEY: 'ascii_widget_state'
+    };
+
+    // State
+    let state = {
+      content: null,
+      currentArt: null,
+      playlist: [],
+      selectedTheme: 'all',
+      currentIndex: 0
+    };
+
+    // DOM Elements
+    const elements = {
+      preview: document.getElementById('preview-content'),
+      previewMeta: document.getElementById('preview-meta'),
+      gallery: document.getElementById('gallery'),
+      playlist: document.getElementById('playlist'),
+      artCount: document.getElementById('art-count'),
+      currentTheme: document.getElementById('current-theme'),
+      lastSync: document.getElementById('last-sync'),
+      systemLog: document.getElementById('system-log'),
+      notification: document.getElementById('notification'),
+      notificationText: document.getElementById('notification-text'),
+      notificationIcon: document.getElementById('notification-icon')
+    };
+
+    // Initialize
+    async function init() {
+      log('Initializing control panel...');
+      loadState();
+      await fetchContent();
+      setupEventListeners();
+      startPolling();
+      renderGallery();
+      renderPlaylist();
+      showNextArt();
+      log('Ready. Waiting for commands.');
+    }
+
+    // Fetch content from GitHub
+    async function fetchContent() {
+      try {
+        log('Fetching content from remote...');
+        const response = await fetch(CONFIG.CONTENT_URL + '?t=' + Date.now());
+        if (!response.ok) throw new Error('Network response was not ok');
+        
+        state.content = await response.json();
+        elements.artCount.textContent = `${state.content.art.length} pieces`;
+        elements.lastSync.textContent = new Date().toLocaleTimeString();
+        
+        log(`Loaded ${state.content.art.length} art pieces`);
+        return true;
+      } catch (error) {
+        log(`Error: ${error.message}`, 'error');
+        showNotification('Failed to fetch content', 'error');
+        return false;
+      }
+    }
+
+    // Render gallery
+    function renderGallery() {
+      if (!state.content) return;
+      
+      const filtered = state.selectedTheme === 'all' 
+        ? state.content.art 
+        : state.content.art.filter(a => a.theme === state.selectedTheme);
+      
+      elements.gallery.innerHTML = filtered.map((art, i) => `
+        <div class="gallery-item" data-id="${art.id}">
+          <div class="gallery-preview">${getPreviewText(art)}</div>
+          <div class="gallery-meta">
+            <span class="gallery-title">${art.title}</span>
+            <span class="gallery-theme">${art.theme}</span>
+          </div>
+        </div>
+      `).join('');
+
+      // Add click handlers
+      elements.gallery.querySelectorAll('.gallery-item').forEach(item => {
+        item.addEventListener('click', () => selectArt(item.dataset.id));
+      });
+    }
+
+    function getPreviewText(art) {
+      if (art.type === 'animated' && art.frames) {
+        return art.frames[0].content.substring(0, 300);
+      }
+      return art.content.substring(0, 300);
+    }
+
+    // Select art piece
+    function selectArt(id) {
+      const art = state.content.art.find(a => a.id === id);
+      if (!art) return;
+      
+      state.currentArt = art;
+      
+      // Update UI
+      elements.gallery.querySelectorAll('.gallery-item').forEach(item => {
+        item.classList.toggle('selected', item.dataset.id === id);
+      });
+      
+      renderPreview(art);
+      log(`Selected: ${art.title}`);
+    }
+
+    // Render preview
+    function renderPreview(art) {
+      const content = art.type === 'animated' && art.frames 
+        ? art.frames[0].content 
+        : art.content;
+      
+      elements.preview.textContent = content;
+      elements.previewMeta.textContent = `${art.title} • ${art.theme} • ${art.type}`;
+    }
+
+    // Show next art
+    function showNextArt() {
+      if (!state.content) return;
+      
+      const filtered = state.selectedTheme === 'all' 
+        ? state.content.art 
+        : state.content.art.filter(a => a.theme === state.selectedTheme);
+      
+      if (filtered.length === 0) return;
+      
+      state.currentIndex = (state.currentIndex + 1) % filtered.length;
+      selectArt(filtered[state.currentIndex].id);
+    }
+
+    // Show random art
+    function showRandomArt() {
+      if (!state.content) return;
+      
+      const filtered = state.selectedTheme === 'all' 
+        ? state.content.art 
+        : state.content.art.filter(a => a.theme === state.selectedTheme);
+      
+      if (filtered.length === 0) return;
+      
+      const randomIndex = Math.floor(Math.random() * filtered.length);
+      selectArt(filtered[randomIndex].id);
+      log('Random selection');
+    }
+
+    // Playlist management
+    function addToQueue() {
+      if (!state.currentArt) {
+        showNotification('No art selected', 'error');
+        return;
+      }
+      
+      state.playlist.push(state.currentArt);
+      renderPlaylist();
+      saveState();
+      showNotification('Added to queue');
+      log(`Added "${state.currentArt.title}" to queue`);
+    }
+
+    function renderPlaylist() {
+      if (state.playlist.length === 0) {
+        elements.playlist.innerHTML = `
+          <div class="playlist-item">
+            <span class="playlist-number">--</span>
+            <div class="playlist-info">
+              <div class="playlist-title">Queue is empty</div>
+              <div class="playlist-theme">Add items from gallery</div>
+            </div>
+          </div>
+        `;
+        return;
+      }
+      
+      elements.playlist.innerHTML = state.playlist.map((art, i) => `
+        <div class="playlist-item" data-index="${i}">
+          <span class="playlist-number">${String(i + 1).padStart(2, '0')}</span>
+          <div class="playlist-info">
+            <div class="playlist-title">${art.title}</div>
+            <div class="playlist-theme">${art.theme}</div>
+          </div>
+          <div class="playlist-actions">
+            <button class="icon-btn" onclick="removeFromQueue(${i})">×</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function removeFromQueue(index) {
+      state.playlist.splice(index, 1);
+      renderPlaylist();
+      saveState();
+    }
+
+    function clearQueue() {
+      state.playlist = [];
+      renderPlaylist();
+      saveState();
+      showNotification('Queue cleared');
+      log('Playlist cleared');
+    }
+
+    // Send custom message
+    function sendCustomMessage() {
+      const message = document.getElementById('custom-message').value.trim();
+      if (!message) {
+        showNotification('Please enter a message', 'error');
+        return;
+      }
+      
+      // In a real implementation, this would update a JSON file
+      // For now, we just show it in the preview
+      const customArt = {
+        id: 'custom-' + Date.now(),
+        title: 'Custom Message',
+        theme: 'custom',
+        type: 'static',
+        content: formatMessageAsArt(message)
+      };
+      
+      state.currentArt = customArt;
+      renderPreview(customArt);
+      showNotification('Message sent to preview');
+      log('Custom message created');
+    }
+
+    function formatMessageAsArt(message) {
+      const lines = message.split('\n');
+      const maxLen = Math.max(...lines.map(l => l.length));
+      const width = Math.min(maxLen + 4, 40);
+      
+      let result = `╔${'═'.repeat(width)}╗\n`;
+      lines.forEach(line => {
+        const padded = line.padEnd(width - 2);
+        result += `║ ${padded}║\n`;
+      });
+      result += `╚${'═'.repeat(width)}╝`;
+      
+      return result;
+    }
+
+    // Theme selection
+    function selectTheme(theme) {
+      state.selectedTheme = theme;
+      elements.currentTheme.textContent = theme === 'all' ? 'All Themes' : 
+        theme.charAt(0).toUpperCase() + theme.slice(1);
+      
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.theme === theme);
+      });
+      
+      renderGallery();
+      log(`Theme filter: ${theme}`);
+    }
+
+    // Event listeners
+    function setupEventListeners() {
+      // Theme buttons
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.addEventListener('click', () => selectTheme(btn.dataset.theme));
+      });
+      
+      // Control buttons
+      document.getElementById('btn-next').addEventListener('click', showNextArt);
+      document.getElementById('btn-random').addEventListener('click', showRandomArt);
+      document.getElementById('btn-refresh').addEventListener('click', () => {
+        fetchContent().then(() => showNotification('Content refreshed'));
+      });
+      document.getElementById('btn-clear').addEventListener('click', clearQueue);
+      document.getElementById('btn-add-queue').addEventListener('click', addToQueue);
+      document.getElementById('btn-set-now').addEventListener('click', () => {
+        showNotification('Current art set as active');
+        log('Art marked as active');
+      });
+      document.getElementById('btn-send-msg').addEventListener('click', sendCustomMessage);
+    }
+
+    // System log
+    function log(message, type = 'info') {
+      const time = new Date().toLocaleTimeString();
+      const line = document.createElement('div');
+      line.className = 'terminal-line';
+      line.innerHTML = `> [${time}] ${message}`;
+      
+      if (type === 'error') {
+        line.style.color = 'var(--accent-red)';
+      }
+      
+      elements.systemLog.insertBefore(line, elements.systemLog.lastElementChild);
+      elements.systemLog.scrollTop = elements.systemLog.scrollHeight;
+    }
+
+    // Notification
+    function showNotification(text, type = 'success') {
+      elements.notificationText.textContent = text;
+      elements.notificationIcon.textContent = type === 'success' ? '✓' : '✗';
+      elements.notification.className = `notification ${type} show`;
+      
+      setTimeout(() => {
+        elements.notification.classList.remove('show');
+      }, 3000);
+    }
+
+    // Polling
+    function startPolling() {
+      setInterval(() => {
+        fetchContent();
+      }, CONFIG.POLL_INTERVAL);
+    }
+
+    // State persistence
+    function saveState() {
+      localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify({
+        playlist: state.playlist,
+        selectedTheme: state.selectedTheme
+      }));
+    }
+
+    function loadState() {
+      const saved = localStorage.getItem(CONFIG.STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        state.playlist = parsed.playlist || [];
+        state.selectedTheme = parsed.selectedTheme || 'all';
+      }
+    }
+
+    // Start
+    init();
+  </script>
+</body>
+</html>
