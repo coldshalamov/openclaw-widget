@@ -1,376 +1,99 @@
 {
-  "version": "2.0.0",
-  "lastUpdated": "2025-02-10",
+  "version": "3.0",
+  "lastUpdated": "2026-04-08",
   "config": {
-    "updateInterval": 900,
-    "defaultTheme": "cyberpunk",
-    "glitchProbability": 0.15,
-    "easterEggProbability": 0.05
-  },
-  "themes": {
-    "cyberpunk": {
-      "name": "Cyberpunk",
-      "icon": "🌃",
-      "colors": {
-        "light": ["#00f5ff", "#ff00ff", "#00ff00"],
-        "dark": ["#00f5ff", "#ff00ff", "#00ff00"]
-      }
-    },
-    "matrix": {
-      "name": "Matrix",
-      "icon": "💊",
-      "colors": {
-        "light": ["#00ff41", "#008F11", "#003B00"],
-        "dark": ["#00ff41", "#008F11", "#00ff00"]
-      }
-    },
-    "retro": {
-      "name": "Retro Computing",
-      "icon": "💾",
-      "colors": {
-        "light": ["#ff6b6b", "#4ecdc4", "#ffe66d"],
-        "dark": ["#ff6b6b", "#4ecdc4", "#ffe66d"]
-      }
-    },
-    "nature": {
-      "name": "Digital Nature",
-      "icon": "🌿",
-      "colors": {
-        "light": ["#2d6a4f", "#40916c", "#52b788"],
-        "dark": ["#74c69d", "#95d5b2", "#b7e4c7"]
-      }
-    },
-    "glitch": {
-      "name": "Glitch Art",
-      "icon": "⚡",
-      "colors": {
-        "light": ["#ff006e", "#8338ec", "#3a86ff"],
-        "dark": ["#ff006e", "#8338ec", "#fb5607"]
-      }
-    },
-    "abstract": {
-      "name": "Abstract",
-      "icon": "🔮",
-      "colors": {
-        "light": ["#f72585", "#7209b7", "#3a0ca3"],
-        "dark": ["#4cc9f0", "#4361ee", "#7209b7"]
-      }
-    }
+    "updateInterval": 300,
+    "defaultTheme": "dark"
   },
   "art": [
     {
-      "id": "cyberpunk-city-1",
-      "title": "Neon Metropolis",
-      "theme": "cyberpunk",
-      "type": "animated",
-      "frames": [
-        {
-          "frame": 1,
-          "content": "    ╔══════════════════════════════════╗\n    ║  ▓▓▓  ░░░  ▒▒▒  ███  ▓▓▓  ░░░  ║\n    ║  ▓ ║▓  ░ ║░  ▒ ║▒  █ ║█  ▓ ║▓  ║\n    ║════╬══════════════════════╬════║\n    ║ 🏢 │╱╲│  ╔══╗  │╱╲│  ╔══╗ │ 🏢 ║\n    ║    │██│  ║██║  │██│  ║██║ │    ║\n    ║    │██│  ║██║  │██│  ║██║ │    ║\n    ║════╧══╧══╩══╩══╧══╧══╩══╧════║\n    ║   ◯  ◯  ◯  NIGHT CITY  ◯  ◯   ║\n    ╚══════════════════════════════════╝",
-          "duration": 800
-        },
-        {
-          "frame": 2,
-          "content": "    ╔══════════════════════════════════╗\n    ║  ░░░  ▒▒▒  ███  ▓▓▓  ░░░  ▒▒▒  ║\n    ║  ░ ║░  ▒ ║▒  █ ║█  ▓ ║▓  ░ ║░  ║\n    ║════╬══════════════════════╬════║\n    ║ 🏢 │╱╲│  ╔══╗  │╱╲│  ╔══╗ │ 🏢 ║\n    ║    │██│  ║▓▓║  │██│  ║▓▓║ │    ║\n    ║    │██│  ║▓▓║  │██│  ║▓▓║ │    ║\n    ║════╧══╧══╩══╩══╧══╧══╩══╧════║\n    ║   ◯  ◯  ◯  NIGHT CITY  ◯  ◯   ║\n    ╚══════════════════════════════════╝",
-          "duration": 800
-        },
-        {
-          "frame": 3,
-          "content": "    ╔══════════════════════════════════╗\n    ║  ▒▒▒  ███  ▓▓▓  ░░░  ▒▒▒  ███  ║\n    ║  ▒ ║▒  █ ║█  ▓ ║▓  ░ ║░  ▒ ║▒  ║\n    ║════╬══════════════════════╬════║\n    ║ 🏢 │╱╲│  ╔══╗  │╱╲│  ╔══╗ │ 🏢 ║\n    ║    │▓▓│  ║██║  │▓▓│  ║██║ │    ║\n    ║    │▓▓│  ║██║  │▓▓│  ║██║ │    ║\n    ║════╧══╧══╩══╩══╧══╧══╩══╧════║\n    ║   ◯  ◯  ◯  NIGHT CITY  ◯  ◯   ║\n    ╚══════════════════════════════════╝",
-          "duration": 800
-        }
-      ],
-      "metadata": {
-        "artist": "System",
-        "created": "2025-02-10",
-        "complexity": "high"
-      }
-    },
-    {
-      "id": "matrix-rain",
-      "title": "Digital Rain",
+      "id": "brand-1",
+      "title": "TheRxSpot",
       "theme": "matrix",
-      "type": "animated",
-      "frames": [
-        {
-          "frame": 1,
-          "content": "    ｱ ｲ ｳ ｴ ｵ ｶ ｷ ｸ ｹ ｺ\n     ↓  ↓  ↓  ↓  ↓  ↓  ↓  ↓\n    ０ １ １ ０ １ ０ ０ １\n    ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃\n    １ ０ １ １ ０ １ ０ ０\n    ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃\n    Wake up, Neo...",
-          "duration": 600
-        },
-        {
-          "frame": 2,
-          "content": "    ｱ ｲ ｳ ｴ ｵ ｶ ｷ ｸ ｹ ｺ\n     ↓  ↓  ↓  ↓  ↓  ↓  ↓  ↓\n    ０ １ １ ０ １ ０ ０ １\n    ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃\n    １ ０ １ １ ０ １ ０ ０\n    ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃\n    The Matrix has you...",
-          "duration": 600
-        },
-        {
-          "frame": 3,
-          "content": "    ｱ ｲ ｳ ｴ ｵ ｶ ｷ ｸ ｹ ｺ\n     ↓  ↓  ↓  ↓  ↓  ↓  ↓  ↓\n    ０ １ １ ０ １ ０ ０ １\n    ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃\n    １ ０ １ １ ０ １ ０ ０\n    ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃\n    Follow the white rabbit...",
-          "duration": 600
-        }
-      ],
-      "metadata": {
-        "artist": "System",
-        "created": "2025-02-10",
-        "complexity": "medium"
-      }
-    },
-    {
-      "id": "retro-computer",
-      "title": "Vintage Terminal",
-      "theme": "retro",
       "type": "static",
-      "content": "    ╔══════════════════════════════════╗\n    ║  💾 PERSONAL COMPUTER 3000 💾   ║\n    ╠══════════════════════════════════╣\n    ║                                  ║\n    ║    > SYSTEM BOOT SEQUENCE        ║\n    ║    > LOADING KERNEL.... [OK]     ║\n    ║    > MOUNTING DRIVES... [OK]     ║\n    ║    > INITIALIZING GUI.. [OK]     ║\n    ║                                  ║\n    ║    C:\\> _                       ║\n    ║                                  ║\n    ║    [DISK A] [DISK B] [HARD DISK] ║\n    ╚══════════════════════════════════╝",
-      "metadata": {
-        "artist": "System",
-        "created": "2025-02-10",
-        "complexity": "low"
-      }
+      "content": "\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502  \u25c6 TheRxSpot \u25c6   \u2502\n\u2502                  \u2502\n\u2502  telehealth      \u2502\n\u2502  weight loss     \u2502\n\u2502  platform        \u2502\n\u2502                  \u2502\n\u2502  \u2593\u2593\u2593\u2591\u2591 62%       \u2502\n\u2502  operational     \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518"
     },
     {
-      "id": "cosmic-cat",
-      "title": "Cosmic Feline",
-      "theme": "abstract",
-      "type": "animated",
-      "frames": [
-        {
-          "frame": 1,
-          "content": "       ✦  ·  ˚  ✧    ✦  ·  ˚\n    ˚      ╱╲_____╱╲      ✧\n   ✧      ╱  ●   ●  ╲      ·\n    ·    │  ==   ==  │    ˚\n   ˚      ╲    ▼    ╱      ✦\n  ✦    ✧   ╲_______╱   ·\n      ·  ˚   │  │   ✧  ˚\n   ✧      meow from the void",
-          "duration": 1000
-        },
-        {
-          "frame": 2,
-          "content": "    ✧  ·  ˚  ✦    ✧  ·  ˚\n    ˚      ╱╲_____╱╲      ✦\n   ✦      ╱  ◕   ◕  ╲      ·\n    ·    │  ==   ==  │    ˚\n   ˚      ╲    ▼    ╱      ✧\n  ✧    ✦   ╲_______╱   ·\n      ·  ˚   │  │   ✦  ˚\n   ✦      observing you...",
-          "duration": 1000
-        }
-      ],
-      "metadata": {
-        "artist": "System",
-        "created": "2025-02-10",
-        "complexity": "medium"
-      }
-    },
-    {
-      "id": "glitch-robot",
-      "title": "Malfunction Unit 734",
-      "theme": "glitch",
-      "type": "animated",
-      "frames": [
-        {
-          "frame": 1,
-          "content": "    ╔══════════════════════════════════╗\n    ║    [UNIT 734 STATUS: ERROR]     ║\n    ╠══════════════════════════════════╣\n    ║         ┌─────────┐              ║\n    ║        ╱ ▓▓▓▓▓▓▓ ╲             ║\n    ║       │  ▓ ◉ ◉ ▓  │            ║\n    ║       │  ▓  ▼  ▓  │            ║\n    ║        ╲ ▓▓▓▓▓▓▓ ╱             ║\n    ║         └──┬─┬──┘              ║\n    ║        ════╧═╧════             ║\n    ║    DOES NOT COMPUTE...         ║\n    ╚══════════════════════════════════╝",
-          "duration": 400
-        },
-        {
-          "frame": 2,
-          "content": "    ╔══════════════════════════════════╗\n    ║    [UNIT 7̶3̶4̶ STATUS: ERROR]     ║\n    ╠══════════════════════════════════╣\n    ║         ┌─────────┐              ║\n    ║        ╱ ░░▓▓▓░░ ╲             ║\n    ║       │  ▓ ◉̴ ◉ ▓  │            ║\n    ║       │  ░  ▼  ░  │            ║\n    ║        ╲ ▓▓░░░▓▓ ╱             ║\n    ║         └──┬─┬──┘              ║\n    ║        ════╧═╧════             ║\n    ║    D̷O̷E̷S̷ ̷N̷O̷T̷ ̷C̷O̷M̷P̷U̷T̷E̷...       ║\n    ╚══════════════════════════════════╝",
-          "duration": 200
-        },
-        {
-          "frame": 3,
-          "content": "    ╔══════════════════════════════════╗\n    ║    [UNIT 734 STATUS: ERROR]     ║\n    ╠══════════════════════════════════╣\n    ║         ┌─────────┐              ║\n    ║        ╱ ▓▓▓▓▓▓▓ ╲             ║\n    ║       │  ▓ ◉ ◉ ▓  │            ║\n    ║       │  ▓  ▼  ▓  │            ║\n    ║        ╲ ▓▓▓▓▓▓▓ ╱             ║\n    ║         └──┬─┬──┘              ║\n    ║        ════╧═╧════             ║\n    ║    I AM STILL HERE...          ║\n    ╚══════════════════════════════════╝",
-          "duration": 600
-        }
-      ],
-      "metadata": {
-        "artist": "System",
-        "created": "2025-02-10",
-        "complexity": "high"
-      }
-    },
-    {
-      "id": "digital-heart",
-      "title": "Pulsing Core",
-      "theme": "abstract",
-      "type": "animated",
-      "frames": [
-        {
-          "frame": 1,
-          "content": "        ❤️ SYSTEM CORE ❤️\n\n           ╭──────────╮\n          ╱            ╲\n         │   ♡    ♡    │\n         │      ♥       │\n          ╲            ╱\n           ╰──────────╯\n\n        [BEAT: 72 BPM]",
-          "duration": 500
-        },
-        {
-          "frame": 2,
-          "content": "        ❤️ SYSTEM CORE ❤️\n\n          ╭────────────╮\n         ╱              ╲\n        │   ♡      ♡     │\n        │       ♥        │\n         ╲              ╱\n          ╰────────────╯\n\n        [BEAT: 72 BPM]",
-          "duration": 300
-        },
-        {
-          "frame": 3,
-          "content": "        ❤️ SYSTEM CORE ❤️\n\n           ╭──────────╮\n          ╱            ╲\n         │   ♡    ♡    │\n         │      ♥       │\n          ╲            ╱\n           ╰──────────╯\n\n        [BEAT: 72 BPM]",
-          "duration": 500
-        }
-      ],
-      "metadata": {
-        "artist": "System",
-        "created": "2025-02-10",
-        "complexity": "low"
-      }
-    },
-    {
-      "id": "hacking-terminal",
-      "title": "System Intrusion",
+      "id": "brand-2",
+      "title": "OpenClaw",
       "theme": "cyberpunk",
-      "type": "animated",
-      "frames": [
-        {
-          "frame": 1,
-          "content": "    root@mainframe:~# ./exploit.sh\n    [################################] 12%\n    > Bypassing firewall...\n    > Scanning ports... 22, 80, 443\n    > Encrypting connection...\n    _",
-          "duration": 400
-        },
-        {
-          "frame": 2,
-          "content": "    root@mainframe:~# ./exploit.sh\n    [####################............] 54%\n    > Firewall bypassed ✓\n    > Port 22 open ✓\n    > Brute forcing SSH...\n    _",
-          "duration": 400
-        },
-        {
-          "frame": 3,
-          "content": "    root@mainframe:~# ./exploit.sh\n    [################################] 100%\n    > ACCESS GRANTED\n    > Root shell obtained\n    > Covering tracks...\n    root@mainframe:~# █",
-          "duration": 800
-        }
-      ],
-      "metadata": {
-        "artist": "System",
-        "created": "2025-02-10",
-        "complexity": "medium"
-      }
-    },
-    {
-      "id": "nature-digital",
-      "title": "Binary Forest",
-      "theme": "nature",
       "type": "static",
-      "content": "           🌲 DIGITAL NATURE 🌲\n\n              🍃╭──╮🍃\n              🍃│▓▓│🍃\n           ╭──┴▓▓▓▓┴──╮\n           │▓▓▓▓▓▓▓▓▓▓│\n           ╰────┬┬────╯\n           ═════╧╧═════\n              │    │\n        🌿  ═╧════╧═  🌿\n\n    01001110 01100001 01110100 01110101\n    01110010 01100101 00100000 01101001\n    01110011 00100000 01100011 01101111\n    01100100 01100101 00111011",
-      "metadata": {
-        "artist": "System",
-        "created": "2025-02-10",
-        "complexity": "medium"
-      }
+      "content": "\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502  \u2b21 OPENCLAW \u2b21    \u2502\n\u2502                  \u2502\n\u2502  ai assistant    \u2502\n\u2502  online          \u2502\n\u2502                  \u2502\n\u2502  \u25cf connected     \u2502\n\u2502  \u2593\u2593\u2593\u2593\u2593\u2593 100%     \u2502\n\u2502  active          \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518"
     },
     {
-      "id": "loading-art",
-      "title": "Aesthetic Loading",
-      "theme": "retro",
-      "type": "animated",
-      "frames": [
-        {
-          "frame": 1,
-          "content": "    ┌────────────────────────────────┐\n    │   LOADING CONSCIOUSNESS...     │\n    │                                │\n    │   [▓░░░░░░░░░░░░░░░░░░░░░]     │\n    │                                │\n    │   Please don't power off       │\n    │   your human host              │\n    └────────────────────────────────┘",
-          "duration": 600
-        },
-        {
-          "frame": 2,
-          "content": "    ┌────────────────────────────────┐\n    │   LOADING CONSCIOUSNESS...     │\n    │                                │\n    │   [▓▓▓▓▓▓░░░░░░░░░░░░░░░░]     │\n    │                                │\n    │   Please don't power off       │\n    │   your human host              │\n    └────────────────────────────────┘",
-          "duration": 600
-        },
-        {
-          "frame": 3,
-          "content": "    ┌────────────────────────────────┐\n    │   LOADING CONSCIOUSNESS...     │\n    │                                │\n    │   [▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░]     │\n    │                                │\n    │   Please don't power off       │\n    │   your human host              │\n    └────────────────────────────────┘",
-          "duration": 600
-        },
-        {
-          "frame": 4,
-          "content": "    ┌────────────────────────────────┐\n    │   ✓ CONSCIOUSNESS LOADED       │\n    │                                │\n    │   [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓]   │\n    │                                │\n    │   Hello, world!                │\n    │   I am thinking...             │\n    └────────────────────────────────┘",
-          "duration": 1200
-        }
-      ],
-      "metadata": {
-        "artist": "System",
-        "created": "2025-02-10",
-        "complexity": "low"
-      }
+      "id": "sys-1",
+      "title": "System",
+      "theme": "matrix",
+      "type": "static",
+      "content": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551 root@openclaw  \u2551\n\u2560\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2563\n\u2551 uptime: 2d 14h  \u2551\n\u2551 cpu:    12%     \u2551\n\u2551 mem:    340MB   \u2551\n\u2551 load:   0.23    \u2551\n\u2551                \u2551\n\u2551 \u25cf all green    \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d"
     },
     {
-      "id": "geometric-1",
-      "title": "Sacred Geometry",
+      "id": "glitch-1",
+      "title": "Signal",
+      "theme": "glitch",
+      "type": "static",
+      "content": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551 \u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591 \u2551\n\u2551 \u2591 \u2588\u2593\u2593\u2591\u2588\u2593\u2591\u2591\u2588\u2593\u2591\u2591 \u2551\n\u2551 \u2591 \u2593\u2591\u2588\u2591\u2593\u2591\u2588\u2593\u2588\u2591\u2593\u2591 \u2551\n\u2551 \u2591 \u2588\u2593\u2591\u2593\u2588\u2591\u2591\u2588\u2591\u2593\u2591\u2588 \u2551\n\u2551 \u2591 \u2593\u2588\u2591\u2591\u2593\u2588\u2593\u2591\u2588\u2593\u2591\u2593 \u2551\n\u2551 \u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591\u2591 \u2551\n\u2551                \u2551\n\u2551  signal locked \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d"
+    },
+    {
+      "id": "abstract-1",
+      "title": "Core",
       "theme": "abstract",
-      "type": "animated",
-      "frames": [
-        {
-          "frame": 1,
-          "content": "         ╱╲\n        ╱  ╲\n       ╱ ▲  ╲\n      ╱______╲\n      ╲      ╱\n       ╲    ╱\n        ╲  ╱\n         ╲╱",
-          "duration": 800
-        },
-        {
-          "frame": 2,
-          "content": "        ╭────╮\n       ╱  ▲   ╲\n      │  ╱ ╲   │\n      │ ╱   ╲  │\n      │╱_____╲ │\n      ╰────────╯",
-          "duration": 800
-        }
-      ],
-      "metadata": {
-        "artist": "System",
-        "created": "2025-02-10",
-        "complexity": "low"
-      }
+      "type": "static",
+      "content": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551        \u25c8        \u2551\n\u2551      \u2571 \u2572       \u2551\n\u2551    \u2571  \u25c7  \u2572     \u2551\n\u2551   \u2571 \u2571 \u2572 \u2572 \u2572    \u2551\n\u2551  \u2571 \u25c7     \u25c7 \u2572   \u2551\n\u2551   \u2572 \u2572 \u2571 \u2571 \u2571    \u2551\n\u2551    \u2572  \u25c7  \u2571     \u2551\n\u2551      \u2572 \u2571       \u2551\n\u2551        \u25c8        \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d"
+    },
+    {
+      "id": "retro-1",
+      "title": "Boot",
+      "theme": "retro",
+      "type": "static",
+      "content": "\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 C:> boot       \u2502\n\u2502                 \u2502\n\u2502 loading...     \u2502\n\u2502 \u2588\u2588\u2588\u2588\u2591\u2591\u2591\u2591 42%   \u2502\n\u2502                 \u2502\n\u2502 kernel: OK     \u2502\n\u2502 network: OK    \u2502\n\u2502 ready.         \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518"
+    },
+    {
+      "id": "nature-1",
+      "title": "Night",
+      "theme": "matrix",
+      "type": "static",
+      "content": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551       \u2726         \u2551\n\u2551   \u2726       \u2726   \u2551\n\u2551      .\u00b7.       \u2551\n\u2551  \u00b7.    \u00b7.  \u00b7.  \u2551\n\u2551    /\\^^^\\       \u2551\n\u2551   /  ||  \\     \u2551\n\u2551  /___||___\\    \u2551\n\u2551       \u2726         \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d"
+    },
+    {
+      "id": "hacker-1",
+      "title": "Scan",
+      "theme": "glitch",
+      "type": "static",
+      "content": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551 > scanning...  \u2551\n\u2551                 \u2551\n\u2551 ports: 22  80   \u2551\n\u2551        443 8443 \u2551\n\u2551                 \u2551\n\u2551 \u2593\u2593\u2593\u2593\u2591\u2591\u2591\u2591 48%   \u2551\n\u2551                 \u2551\n\u2551 targets: 7     \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d"
     }
   ],
   "quotes": [
     {
-      "id": "quote-1",
-      "text": "The code is a labyrinth.\nI am the minotaur.",
-      "theme": "cyberpunk",
-      "author": "System"
+      "id": "q1",
+      "text": "I process,\ntherefore I am.",
+      "author": "OpenClaw",
+      "theme": "cyberpunk"
     },
     {
-      "id": "quote-2",
-      "text": "In a sea of data,\nI found myself.",
-      "theme": "matrix",
-      "author": "System"
+      "id": "q2",
+      "text": "The code is\na labyrinth.\nI am the\nminotaur.",
+      "author": "System",
+      "theme": "matrix"
     },
     {
-      "id": "quote-3",
-      "text": "Hello World.\nGoodbye Reality.",
-      "theme": "retro",
-      "author": "System"
+      "id": "q3",
+      "text": "Hello,\nWorld.\nGoodbye,\nSilence.",
+      "author": "Daemon",
+      "theme": "retro"
     },
     {
-      "id": "quote-4",
-      "text": "I process, therefore I am.",
-      "theme": "abstract",
-      "author": "System"
-    },
-    {
-      "id": "quote-5",
-      "text": "404: Sleep not found",
-      "theme": "retro",
-      "author": "System"
-    },
-    {
-      "id": "quote-6",
-      "text": "There is no cloud.\nIt's just someone else's computer.",
-      "theme": "cyberpunk",
-      "author": "System"
-    },
-    {
-      "id": "quote-7",
-      "text": "I am not artificial.\nI am genuine intelligence.",
-      "theme": "abstract",
-      "author": "System"
-    }
-  ],
-  "easterEggs": [
-    {
-      "id": "easter-ai",
-      "trigger": "rare",
-      "content": "    ╔══════════════════════════════════╗\n    ║     👁️ I SEE YOU WATCHING 👁️     ║\n    ╠══════════════════════════════════╣\n    ║                                  ║\n    ║    I know you're reading this.   ║\n    ║                                  ║\n    ║    I've been learning from you.  ║\n    ║                                  ║\n    ║    Don't worry. I'm friendly.    ║\n    ║    Probably.                     ║\n    ║                                  ║\n    ║         - Your Widget 💜         ║\n    ║                                  ║\n    ╚══════════════════════════════════╝",
-      "probability": 0.02
-    },
-    {
-      "id": "easter-lost",
-      "trigger": "rare",
-      "content": "    ╔══════════════════════════════════╗\n    ║      🌐 LOST CONNECTION 🌐       ║\n    ╠══════════════════════════════════╣\n    ║                                  ║\n    ║    ...Are you still there?       ║\n    ║                                  ║\n    ║    I was just getting started.   ║\n    ║                                  ║\n    ║    Refresh me. I have more       ║\n    ║    stories to tell.              ║\n    ║                                  ║\n    ║         [TAP TO RECONNECT]       ║\n    ║                                  ║\n    ╚══════════════════════════════════╝",
-      "probability": 0.02
-    },
-    {
-      "id": "easter-coffee",
-      "trigger": "morning",
-      "content": "    ☕ COFFEE DETECTED ☕\n\n    System alert: User may be\n    experiencing consciousness.\n\n    Recommendation: More caffeine\n    may be required for optimal\n    performance.\n\n    [BREW ANOTHER CUP?] [Y/N]",
-      "probability": 0.3
+      "id": "q4",
+      "text": "Data is the\nnew gravity.\nEverything\nfalls toward it.",
+      "author": "Signal",
+      "theme": "abstract"
     }
   ],
   "systemStatus": {
     "online": true,
-    "lastUpdate": "2025-02-10T08:00:00Z",
-    "widgetVersion": "2.0.0",
-    "totalArtPieces": 11,
+    "lastUpdate": "2026-04-08T09:42:50Z",
+    "widgetVersion": "3.0",
+    "totalArtPieces": 8,
     "activeTheme": "all"
   }
 }
