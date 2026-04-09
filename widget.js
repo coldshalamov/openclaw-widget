@@ -1,33 +1,13 @@
 const CONFIG = {
   CONTENT_URL: "https://raw.githubusercontent.com/coldshalamov/openclaw-widget/main/content/art-v2.json",
-  UPDATE_INTERVAL: 900,
-  WIDGET_SIZE: config.widgetFamily || "medium",
-  CACHE_FILE: "ascii_art_cache.json",
-  SHOW_META: false,
-  FRAME_DURATION: 600,
-  GLITCH_MODE: false,
-  THEME_PREF: "dark"
-};
-
-const THEMES = {
-  light: {
-    bg: new Color("#0a0a0a"),
-    fg: new Color("#00ff41"),
-    accent: new Color("#00f5ff"),
-    meta: new Color("#666666")
-  },
-  dark: {
-    bg: new Color("#0a0a0a"),
-    fg: new Color("#00ff41"),
-    accent: new Color("#00f5ff"),
-    meta: new Color("#888888")
-  }
+  UPDATE_INTERVAL: 300,
+  CACHE_FILE: "ascii_art_cache.json"
 };
 
 async function createWidget() {
   const widget = new ListWidget();
-  const theme = THEMES.dark;
-  widget.backgroundColor = theme.bg;
+  widget.backgroundColor = new Color("#0a0a0a");
+  widget.setPadding(0, 0, 0, 0);
 
   const content = await fetchContent();
   const art = selectArtPiece(content);
@@ -35,28 +15,27 @@ async function createWidget() {
   const mainStack = widget.addStack();
   mainStack.layoutVertically();
   mainStack.centerAlignContent();
-  mainStack.setPadding(4, 6, 4, 6);
+  mainStack.setPadding(0, 0, 0, 0);
 
+  const size = config.widgetFamily || "medium";
   var fontSize;
-  if (CONFIG.WIDGET_SIZE === "small") fontSize = 5;
-  else if (CONFIG.WIDGET_SIZE === "large") fontSize = 11;
-  else fontSize = 8;
+  if (size === "small") fontSize = 6;
+  else if (size === "large") fontSize = 13;
+  else fontSize = 9;
 
-  var rawContent;
+  var raw = art.content;
   if (art.type === "animated" && art.frames) {
-    var fi = Math.floor(Date.now() / CONFIG.FRAME_DURATION) % art.frames.length;
-    rawContent = art.frames[fi].content;
-  } else {
-    rawContent = art.content;
+    var fi = Math.floor(Date.now() / 600) % art.frames.length;
+    raw = art.frames[fi].content;
   }
 
-  var lines = (rawContent || "").split("\n");
+  var lines = (raw || "").split("\n");
   for (var i = 0; i < lines.length; i++) {
     var t = mainStack.addText(lines[i]);
     t.font = Font.systemFont(fontSize, "monospaced");
-    t.textColor = theme.fg;
+    t.textColor = new Color("#00ff41");
     t.lineLimit = 1;
-    t.minimumScaleFactor = 0.5;
+    t.minimumScaleFactor = 0.01;
   }
 
   widget.refreshAfterDate = new Date(Date.now() + CONFIG.UPDATE_INTERVAL * 1000);
@@ -75,24 +54,20 @@ async function fetchContent() {
   } catch (e) {
     try {
       var fm = FileManager.local();
-      var path = fm.joinPath(fm.documentsDirectory(), CONFIG.CACHE_FILE);
-      if (fm.fileExists(path)) return JSON.parse(fm.readString(path));
+      var p = fm.joinPath(fm.documentsDirectory(), CONFIG.CACHE_FILE);
+      if (fm.fileExists(p)) return JSON.parse(fm.readString(p));
     } catch (e2) {}
-    return { art: [{ id: "fb", title: "Offline", theme: "retro", type: "static", content: "╔═══════════╗\n║ OFFLINE  ║\n╚═══════════╝" }] };
+    return { art: [{ content: "╔═══════════════╗\n║   OFFLINE    ║\n╚═══════════════╝" }] };
   }
 }
 
 function selectArtPiece(content) {
   var art = content.art || [];
-  if (art.length === 0) return { title: "Empty", theme: "retro", content: "No art" };
-  var idx = Math.floor(Math.random() * art.length);
-  return art[idx];
+  if (art.length === 0) return { content: "No art" };
+  return art[Math.floor(Math.random() * art.length)];
 }
 
 var widget = await createWidget();
-if (config.runsInWidget) {
-  Script.setWidget(widget);
-} else {
-  widget.presentMedium();
-}
+if (config.runsInWidget) Script.setWidget(widget);
+else widget.presentMedium();
 Script.complete();
