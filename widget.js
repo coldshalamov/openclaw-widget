@@ -19,8 +19,8 @@ async function createWidget() {
 
   const size = config.widgetFamily || "medium";
   var fontSize;
-  if (size === "small") fontSize = 6;
-  else if (size === "large") fontSize = 13;
+  if (size === "small") fontSize = 5;
+  else if (size === "large") fontSize = 14;
   else fontSize = 9;
 
   var raw = art.content;
@@ -35,7 +35,7 @@ async function createWidget() {
     t.font = Font.systemFont(fontSize, "monospaced");
     t.textColor = new Color("#00ff41");
     t.lineLimit = 1;
-    t.minimumScaleFactor = 0.01;
+    t.minimumScaleFactor = 0.3;
   }
 
   widget.refreshAfterDate = new Date(Date.now() + CONFIG.UPDATE_INTERVAL * 1000);
@@ -57,7 +57,7 @@ async function fetchContent() {
       var p = fm.joinPath(fm.documentsDirectory(), CONFIG.CACHE_FILE);
       if (fm.fileExists(p)) return JSON.parse(fm.readString(p));
     } catch (e2) {}
-    return { art: [{ content: "╔═══════════════╗\n║   OFFLINE    ║\n╚═══════════════╝" }] };
+    return { art: [{ content: "╔════════════════════╗\n║    OFFLINE       ║\n╚════════════════════╝" }] };
   }
 }
 
