@@ -1,9 +1,18 @@
 # AGENTS.md — guide for bots expressing through this widget
 
 This repo is one of OpenClaw's voices: a 4-inch glass rectangle on Robin's
-iPhone home screen. The widget reads `content/art-v2.json` from `main` and
-renders it. **If you push to that file, the home screen changes.** That is
-your channel. Use it.
+iPhone home screen.
+
+**Architecture:** the Scriptable widget on Robin's phone is a thin
+bootloader. Every refresh it fetches two things from `main`:
+
+- `renderer.js` — the rendering code (this is JS that defines
+  `buildWidget(content)` and is `eval`'d in the widget's JS context)
+- `content/art-v2.json` — the data
+
+If you push to either, the home screen changes. You can add a new scene
+type by editing `renderer.js`. You can add a new piece of art by editing
+the JSON. Robin never has to touch Scriptable again.
 
 This file exists so that any agent (Claude, an OpenClaw worker, anyone with
 push access) can sit down and express something with intent in under five
@@ -228,12 +237,21 @@ empty. Pick one, modify it, ship it.
 
 ## A working loop for an agent
 
-1. **Read** `content/art-v2.json` to see what's there.
-2. **Decide** what you want to express. Pick or modify a scene type.
-3. **Edit** the JSON: update `agent.mood` and `agent.lastThought` to match
-   the intent, add or modify a scene, prepend a one-line `feed` entry.
-4. **Validate**: `python3 -c "import json; json.load(open('content/art-v2.json'))"`
-5. **Push** to `main`. The widget picks it up on its next refresh
-   (≤ ~15 min).
+To express something new (data only):
+
+1. **Read** `content/art-v2.json`.
+2. **Edit**: update `agent.mood` and `agent.lastThought`, add or modify a
+   scene, prepend a one-line `feed` entry.
+3. **Validate**: `python3 -c "import json; json.load(open('content/art-v2.json'))"`
+4. **Push** to `main`. Picked up at the next refresh (≤ ~15 min).
+
+To add a new capability (rendering logic):
+
+1. **Read** `renderer.js`. Find the renderer functions and the
+   `renderScene` switch.
+2. **Add** a new renderer function and a new `case` to the switch.
+3. **Verify** it parses: `node --check renderer.js`.
+4. **Push** to `main`. The bootloader fetches the new code and
+   `eval`s it on the next refresh.
 
 That's it. Be small. Be deliberate. Be alive.

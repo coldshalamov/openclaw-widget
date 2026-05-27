@@ -1,6 +1,50 @@
 {
   "version": "3.0",
   "lastUpdated": "2026-05-27",
+  "_legacy_note": "The 'art' field below is a backwards-compat shim for the v1 widget.js. The new widget.js reads 'scenes' instead. Once the new widget.js is installed in Scriptable, 'art' can be removed.",
+  "art": [
+    {
+      "id": "diamond",
+      "title": "Diamond",
+      "type": "static",
+      "content": "                ◆                 \n               ◆◆◆                \n              ◆◆◆◆◆               \n             ◆◆◆◆◆◆◆              \n            ◆◆◆◆◆◆◆◆◆             \n             ◆◆◆◆◆◆◆              \n              ◆◆◆◆◆               \n               ◆◆◆                \n                ◆                 "
+    },
+    {
+      "id": "mandala",
+      "title": "Mandala",
+      "type": "static",
+      "content": "              ✦              \n           ✧     ✧           \n         ◆         ◆         \n       ✧   ◇     ◇   ✧       \n      ◆     ✦   ✦     ◆      \n       ✧   ◇     ◇   ✧       \n         ◆         ◆         \n           ✧     ✧           \n              ✦              "
+    },
+    {
+      "id": "orb-legacy",
+      "title": "Orb",
+      "type": "static",
+      "content": "         ░░▒▒▓▓▓▓▒▒░░         \n       ░▒▓▓██████▓▓▒░       \n     ░▒▓██████████████▓▒░     \n     ░▓████████████████▓░     \n     ░▒▓██████████████▓▒░     \n       ░▒▓▓██████▓▓▒░       \n         ░░▒▒▓▓▓▓▒▒░░         "
+    },
+    {
+      "id": "circuit-legacy",
+      "title": "Circuit",
+      "type": "static",
+      "content": "  ╭───╮            ╭───╮            \n  │ █ │────────────│ █ │            \n  ╰───╯            ╰───╯            \n             ╭──────────╮           \n             │ ████████ │           \n  ───────────┤          ├──────     \n             │ ████████ │           \n             ╰────┬─────╯           \n  ╭───╮           │      ╭───╮      \n  │ █ │───────────┴──────│ █ │      \n  ╰───╯                  ╰───╯      "
+    },
+    {
+      "id": "hello-memo",
+      "title": "Hello",
+      "type": "static",
+      "content": "  ╭──────────────────────────╮  \n  │  hi robin —              │  \n  │  i'm here.               │  \n  │  watching, drawing,      │  \n  │  leaving you signs.      │  \n  ╰──────────────────────────╯  "
+    },
+    {
+      "id": "pulse-legacy",
+      "title": "Pulse",
+      "type": "animated",
+      "frames": [
+        { "content": "                                      \n                                      \n                                      \n                  ●                   \n                                      \n                                      \n                                      " },
+        { "content": "                                      \n                ░░░░░                 \n                ░▒▒▒░                 \n                ░░░░░                 \n                                      \n                                      \n                                      " },
+        { "content": "              ░░░░░░░░░               \n             ░▒▒▒▒▒▒▒░░               \n             ░▒▓███▓▒░                \n             ░▒▒▒▒▒▒▒░░               \n              ░░░░░░░░                \n                                      \n                                      " },
+        { "content": "            ░░░░░░░░░░░░░             \n           ░▒▒▒▒▒▒▒▒▒▒▒░░             \n          ░▒▓▓▓▓▓▓▓▓▓▓▓▒░             \n          ░▒▓███████████▒░            \n          ░▒▓▓▓▓▓▓▓▓▓▓▓▒░             \n           ░▒▒▒▒▒▒▒▒▒▒▒░              \n            ░░░░░░░░░░░░              " }
+      ]
+    }
+  ],
   "config": {
     "rotateSeconds": 60,
     "bgGradient": ["#05050a", "#0a0a18"]
